@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLSI Circuit Partitioning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>VLSI Circuit Partitioning using KL Algorithm</h1>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="verilog_file">Upload Verilog File:</label>
+                <input type="file" name="verilog_file" id="verilog_file" accept=".v,.vh">
+                <button type="submit">Partition Circuit</button>
+            </div>
+        </form>
+        
+        {% if plot_url %}
+        <div class="results">
+            <h2>Results for {{ filename }}</h2>
+            
+            <div class="partition-info">
+                <h3>Partitioning Results</h3>
+                <p><strong>Initial Cut Cost:</strong> {{ result.initial_cost }}</p>
+                <p><strong>Final Cut Cost:</strong> {{ result.cut_cost }}</p>
+                <p><strong>Improvement:</strong> {{ result.improvement }} ({{ ((result.improvement / result.initial_cost) * 100)|round(1) }}%)</p>
+                <p><strong>Partition A Size:</strong> {{ result.partition_a|length }} nodes</p>
+                <p><strong>Partition B Size:</strong> {{ result.partition_b|length }} nodes</p>
+            </div>
+            
+            <div class="visualization">
+                <img src="{{ plot_url }}" alt="Circuit Partitioning Visualization">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
